@@ -1,0 +1,91 @@
+<!DOCTYPE html(lang='en')>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags-->
+    <title>Offline IM</title>
+    <meta name="author" content="Mike Elsmore <mike.elsmore@uk.ibm.com>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <style>
+      body {
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+      }
+
+      main {
+        flex: 1 0 auto;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        Talk to me
+      </div>
+    </nav>
+    <main class="container" >
+      <div class="row" >
+        <div id="alerts" class="col m12" >
+
+        </div>
+      </div>
+      <div class="row" >
+        <div id="messageOutput" class="col m8 offset-m2" >
+          <div id="spinner" class="text-center" >
+            <i class="fa fa-circle-o-notch fa-spin fa-5x"></i>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="page-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col l12">
+            <form id="chat" class="navbar-form navbar-right" role="chat">
+              <div class="input-field col l12">
+                <input type="text" id="user" class="form-control" placeholder="Username" required="required" />
+                <label for="user">Username</label>
+              </div>
+              <div class="input-field col l12">
+                <textarea id="message" class="materialize-textarea"></textarea>
+                <label for="message" placeholder="Talk">Message</label>
+              </div>
+              <button type="submit" class="btn btn-primary">Send <i class="fa fa-paper-plane" ></i></button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="footer-copyright">
+        <div class="container">
+          <a class="grey-text text-lighten-4 right" href="https://elsmore.me">Built with ❤️ by Mike Elsmore</a>
+        </div>
+      </div>
+    </footer>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.min.js" ></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/pouchdb/6.2.0/pouchdb.min.js"></script>
+    <script src="app.js" ></script>
+    <script type="text/javascript" >
+      // Add Service Worker
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js', { scope: './' }).then(function(reg) {
+          if (reg.installing) {
+            console.log('Service worker installing');
+          } else if (reg.waiting) {
+            console.log('Service worker installed');
+          } else if (reg.active) {
+            console.log('Service worker active');
+          }
+        }).catch(function(error) {
+          // registration failed
+          console.log('Registration failed with ' + error);
+        });
+      }
+    </script>
+  </body>
+</html>
